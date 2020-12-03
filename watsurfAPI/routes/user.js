@@ -32,4 +32,8 @@ router.post('/users', (req, res) => {
             .catch(err => res.json(err));
 });
 
+// put 
+
+// delete
+
 module.exports = router;
