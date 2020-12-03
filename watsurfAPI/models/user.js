@@ -25,7 +25,19 @@ function create(usr, callback) {
     }
 }
 
+function update(usr, pseudo, callback) {
+    const db = mongoCli.getDb();
+    const check = userSchema.validate(usr);
+    if(check.error || check.errors){
+        return Promise.reject(check.error.details);
+    } else {
+        usr.pwd = crypto.SHA256(usr.pwd).toString(); 
+        return db.collection('user').updateOne({pseudo: pseudo}, {$set: usr}, callback);
+    }
+}
+
 module.exports = {
     find,
-    create
+    create,
+    update
 }
