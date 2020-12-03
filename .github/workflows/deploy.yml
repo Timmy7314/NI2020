@@ -46,9 +46,11 @@ jobs:
         - name: Install node.js packages
           working-directory: watsurf
           run: yarn
-        - name: Create Build
+        - name: Test and build
           working-directory: watsurf
-          run: yarn build
+          run: |
+            yarn test:ci 
+            yarn build
         - name: Deploy Vue
           uses: horochx/deploy-via-scp@master
           with:
