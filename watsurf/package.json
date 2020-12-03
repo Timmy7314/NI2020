@@ -1,16 +1,30 @@
 {
-  "name": "watsurf",
-  "version": "0.0.0",
+  "name": "vite-ts-tailwind-starter",
+  "version": "0.4.2",
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "start": "yarn dev & wait-on http://localhost:3000",
+    "test": "cypress open",
+    "test:ci": "cypress run --headless"
   },
   "dependencies": {
-    "buefy": "^0.9.4",
+    "@tailwindcss/aspect-ratio": "^0.2.0",
+    "@tailwindcss/forms": "^0.2.1",
+    "@tailwindcss/typography": "^0.3.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "vue": "^3.0.2"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
     "@vue/compiler-sfc": "^3.0.2",
-    "vite": "^1.0.0-rc.8"
+    "@vue/eslint-config-standard": "^5.1.2",
+    "@vue/eslint-config-typescript": "^7.0.0",
+    "eslint": "^7.14.0",
+    "eslint-plugin-vue": "^7.1.0",
+    "typescript": "^4.1.2",
+    "vite": "^1.0.0-rc.9",
+    "wait-on": "^5.2.0"
   }
 }

@@ -1,19 +1,26 @@
 <template>
-  <h1>{{ msg }}</h1>
-  <button @click="count++">count is: {{ count }}</button>
-  <p>Edit <code>components/HelloWorld.vue</code> to test hot module replacement.</p>
+  <div class="px-8 prose">
+    <h1>{{ msg }}</h1>
+    <button class="px-3 py-2 border border-gray-300 rounded-md shadow" @click="count++">
+      count is: {{ count }}
+    </button>
+    <p>Edit <code>components/HelloWorld.vue</code> to test hot module replacement.</p>
+  </div>
 </template>
 
-<script>
-export default {
-  name: 'HelloWorld',
+<script lang="ts">
+import { defineComponent, toRef } from 'vue'
+import { globalState } from '../store'
+
+export default defineComponent({
   props: {
-    msg: String
+    msg: String,
   },
-  data() {
+
+  setup() {
     return {
-      count: 0
+      count: toRef(globalState, 'count'),
     }
-  }
-}
+  },
+})
 </script>
