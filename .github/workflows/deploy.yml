@@ -26,10 +26,14 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
           script : |
+              export NVM_DIR="$HOME/.nvm"
+              [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+              [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+              export PATH="$(yarn global bin):$PATH"
               cd ~/API
-              /home/ubuntu/.yarn/bin/pm2 delete API
+              pm2 delete API
               yarn
-              /home/ubuntu/.yarn/bin/pm2 --name API start yarn -- start
+              pm2 --name API start yarn -- start
   deploy-front:
     runs-on: ubuntu-latest
     env:
