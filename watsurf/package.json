@@ -1,6 +1,6 @@
 {
-  "name": "vite-ts-tailwind-starter",
-  "version": "0.4.2",
+  "name": "Watsurf",
+  "version": "0.0.1",
   "scripts": {
     "build": "vite build",
     "dev": "vite",

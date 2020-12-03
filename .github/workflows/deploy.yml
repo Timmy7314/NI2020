@@ -49,6 +49,7 @@ jobs:
         - name: Test and build
           working-directory: watsurf
           run: |
+            yarn start
             yarn test:ci 
             yarn build
         - name: Deploy Vue
