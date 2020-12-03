@@ -1,0 +1,63 @@
+name: Deploy application
+on:
+  push:
+    branches: [ master ]
+jobs:
+  deploy-back:
+    runs-on: ubuntu-latest
+    defaults: 
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy API
+        uses: horochx/deploy-via-scp@master
+        with:
+          local: watsurfAPI/* # eg: dist/*
+          remote: /home/${{ secrets.USER }}/API # eg: /home/github-action/www
+          host: ${{ secrets.HOST }} # eg: example.com
+          port: ${{ secrets.PORT }} # eg: 22
+          user: ${{ secrets.USER }} # eg: github-action
+          key: ${{ secrets.KEY }} # eg: -----BEGIN OPENSSH PRIVATE KEY-----\nHEIiyzh5cT7hN...
+      - name: Lauch NodeJS App in VM
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          script : |
+              cd ~/API
+              nohup yarn start
+  deploy-front:
+    runs-on: ubuntu-latest
+    env:
+        NODE_VERSION: 15.3.0
+    steps:
+        - uses: actions/checkout@v2
+        - uses: actions/setup-node@v1
+          with:
+              node-version: ${{ env.NODE_VERSION }}
+        - name: Install node.js packages
+          working-directory: watsurf
+          run: yarn
+        - name: Create Build
+          working-directory: watsurf
+          run: yarn build
+        - name: Deploy Vue
+          uses: horochx/deploy-via-scp@master
+          with:
+            local: watsurf/dist/* # eg: dist/*
+            remote: /home/${{ secrets.USER }}/App # eg: /home/github-action/www
+            host: ${{ secrets.HOST }} # eg: example.com
+            port: ${{ secrets.PORT }} # eg: 22
+            user: ${{ secrets.USER }} # eg: github-action
+            key: ${{ secrets.KEY }} # eg: -----BEGIN OPENSSH PRIVATE KEY-----\nHEIiyzh5cT7hN...
+        - name: Lauch NodeJS App in VM
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USER }}
+            key: ${{ secrets.KEY }}
+            script : |
+                cd ~/
+                nohup yarn start
