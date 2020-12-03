@@ -1,0 +1,31 @@
+{
+  "name": "ni2020",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Timmy7314/NI2020.git"
+  },
+  "keywords": [
+    "Node",
+    "VueJS",
+    "Express",
+    "Mongodb"
+  ],
+  "author": "/dev/null",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Timmy7314/NI2020/issues"
+  },
+  "homepage": "https://github.com/Timmy7314/NI2020#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}
