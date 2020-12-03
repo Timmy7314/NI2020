@@ -27,8 +27,9 @@ jobs:
           key: ${{ secrets.KEY }}
           script : |
               cd ~/API
+              pm2 delete API
               yarn
-              nohup yarn start
+              pm2 --name API start yarn -- start
   deploy-front:
     runs-on: ubuntu-latest
     env:
@@ -53,13 +54,3 @@ jobs:
             port: ${{ secrets.PORT }} # eg: 22
             user: ${{ secrets.USER }} # eg: github-action
             key: ${{ secrets.KEY }} # eg: -----BEGIN OPENSSH PRIVATE KEY-----\nHEIiyzh5cT7hN...
-        - name: Lauch NodeJS App in VM
-          uses: appleboy/ssh-action@master
-          with:
-            host: ${{ secrets.HOST }}
-            username: ${{ secrets.USER }}
-            key: ${{ secrets.KEY }}
-            script : |
-                cd ~/App
-                yarn
-                nohup yarn start
