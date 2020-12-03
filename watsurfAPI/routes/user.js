@@ -12,7 +12,7 @@ router.get('/users', (req, res, next) => {
     });
 });
 
-router.get('/users/:pseudo([a-z]+)', (req, res) => {
+router.get('/:pseudo([a-z]+)', (req, res) => {
     user.find(req.params, (err, users) => {
         if (err) {
             res.send(err);
@@ -27,9 +27,12 @@ router.get('/users/:pseudo([a-z]+)', (req, res) => {
 });
 
 router.post('/users', (req, res) => {
-    user.create(req.body)
-            .then(usr =>res.json(usr))
-            .catch(err => res.json(err));
+    user.create(req.body, (err, user) => {
+        if(err){
+            res.send(err);
+        }
+        res.json(user);
+    });
 });
 
 // put 

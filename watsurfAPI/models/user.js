@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const mongoCli = require('../db/connection');
+const crypto = require('crypto-js');
 
 const userSchema = Joi.object().keys({
     pseudo: Joi.string().required(),
@@ -13,13 +14,14 @@ function find(predicat, callback) {
     db.collection('user').find(predicat).toArray(callback);
 }
 
-function create(usr) {
+function create(usr, callback) {
     const db = mongoCli.getDb();
     const check = userSchema.validate(usr);
     if(check.error || check.errors){
-        return Promise.reject(check);
+        return Promise.reject(check.error.details);
     } else {
-        return db.collection('user').insert(user);
+        usr.pwd = crypto.SHA256(usr.pwd).toString(); 
+        return db.collection('user').insertOne(usr, callback);
     }
 }
 
