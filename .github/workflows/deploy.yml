@@ -27,9 +27,9 @@ jobs:
           key: ${{ secrets.KEY }}
           script : |
               cd ~/API
-              pm2 delete API
+              .yarn/bin/pm2 delete API
               yarn
-              pm2 --name API start yarn -- start
+              .yarn/bin/pm2 --name API start yarn -- start
   deploy-front:
     runs-on: ubuntu-latest
     env:
