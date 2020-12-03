@@ -36,8 +36,14 @@ function update(usr, pseudo, callback) {
     }
 }
 
+function remove(pseudo, callback){
+    const db = mongoCli.getDb();
+    return db.collection('user').deleteOne({pseudo: pseudo}, callback);
+}
+
 module.exports = {
     find,
     create,
-    update
+    update,
+    remove
 }

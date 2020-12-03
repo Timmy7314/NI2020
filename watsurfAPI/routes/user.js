@@ -44,6 +44,14 @@ router.put('/users/:pseudo([a-z]+)', (req, res) => {
     });
 }); 
 
-// delete
+router.delete('/users/:pseudo([a-z]+)', (req, res) => {
+    user.remove(req.params.pseudo, (err, user) => {
+        if(err){
+            res.send(err);
+        }
+        res.json(user);
+    });
+}); 
+
 
 module.exports = router;
