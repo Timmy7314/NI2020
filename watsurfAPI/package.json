@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -29,9 +30,11 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "joi": "^17.3.0",
-    "monk": "^7.3.2"
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.11.3"
   },
   "devDependencies": {
-    "@vue/cli": "^4.5.9"
+    "@vue/cli": "^4.5.9",
+    "nodemon": "^1.19.4"
   }
 }
