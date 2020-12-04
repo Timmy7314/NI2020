@@ -20,7 +20,8 @@ function create(usr, callback) {
     if(check.error || check.errors){
         return Promise.reject(check.error.details);
     } else {
-        usr.pwd = crypto.SHA256(usr.pwd).toString(); 
+        usr.pwd = crypto.SHA256(usr.pwd).toString();
+        usr.score = usr.score || 0;
         return db.collection('user').insertOne(usr, callback);
     }
 }
@@ -31,7 +32,8 @@ function update(usr, pseudo, callback) {
     if(check.error || check.errors){
         return Promise.reject(check.error.details);
     } else {
-        usr.pwd = crypto.SHA256(usr.pwd).toString(); 
+        usr.pwd = crypto.SHA256(usr.pwd).toString();
+        usr.score = usr.score || 0;
         return db.collection('user').updateOne({pseudo: pseudo}, {$set: usr}, callback);
     }
 }
