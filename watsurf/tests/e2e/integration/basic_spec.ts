@@ -1,8 +1,8 @@
 // https://docs.cypress.io/api/introduction/api.html
 
-describe('Homepage', () => {
+describe('Register Page', () => {
   it('Shows correct text', () => {
-    cy.visit('/')
+    cy.visit('/register')
 
     cy.contains('h1', 'Hello there 👋, please fill in your information to continue')
 
@@ -12,18 +12,18 @@ describe('Homepage', () => {
 
     cy.get('form').get('input')
 
-    cy.get('button').should('be.visible')
+    cy.get('#submitBtn').should('be.visible')
     cy.get('form')
   .contains('form', 'Sign up')
   .submit()
-     cy.get('button').click()
+     cy.get('#submitBtn').click()
   })
 })
 
 
 describe('My form', () => {
-  it('Can submit a valid form', () => {
-    cy.visit('/')
+  it('Can submit a valid registration form', () => {
+    cy.visit('/register')
 
     cy.log('filling out pseudonym') // if you really need this
     cy.get('#username').type('John714')
@@ -39,5 +39,5 @@ describe('My form', () => {
 
     cy.log('submitting form') // if you really need this
     cy.get('form').submit()
-  })
+})
 })

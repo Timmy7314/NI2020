@@ -13,8 +13,11 @@
     "@tailwindcss/aspect-ratio": "^0.2.0",
     "@tailwindcss/forms": "^0.2.1",
     "@tailwindcss/typography": "^0.3.1",
+    "axios": "^0.21.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
-    "vue": "^3.0.2"
+    "vue": "^3.0.2",
+    "vue-router": "^4.0.0-rc.5",
+    "vuex": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@types/cypress": "^1.1.3",
@@ -23,15 +26,14 @@
     "@vue/compiler-sfc": "^3.0.2",
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/eslint-config-typescript": "^7.0.0",
+    "cypress": "^6.0.1",
     "eslint": "^7.14.0",
     "eslint-plugin-vue": "^7.1.0",
     "typescript": "^4.1.2",
-    "cypress": "^6.0.1",
     "vite": "^1.0.0-rc.13",
     "wait-on": "^5.2.0"
   },
   "resolutions": {
     "cypress": "^6.0.1"
   }
-
 }

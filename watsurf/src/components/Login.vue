@@ -4,25 +4,19 @@
       <h1 class="text-xl font-semibold">
         Hello there 👋, <span class="font-normal">please fill in your information to continue</span>
       </h1>
-      <form class="mt-6" v-on:submit.prevent="getFormValues()">
-        <label for="username" class="block text-xs font-semibold text-gray-600 uppercase"
-          >Username</label
-        >
-        <input
-          id="username"
-          v-model="username"
-          type="text"
-          name="username"
-          placeholder="John714"
-          autocomplete="given-name"
-          class="block w-full p-3 mt-2 text-black bg-white appearance-none focus:outline-none focus:shadow-inner"
-          required
-        />
+      <form class="mt-6" @submit="formValidation">
+        <p v-if="errors.length">
+          <b>Please correct the following error(s):</b>
+          <ul>
+            <li v-for="(error, index) in errors" v-bind:key="index">{{ error }}</li>
+          </ul>
+      </p>
         <label for="email" class="block mt-2 text-xs font-semibold text-gray-600 uppercase"
           >E-mail</label
         >
         <input
           id="email"
+          v-model="email"
           type="email"
           name="email"
           placeholder="john.doe@company.com"
@@ -35,22 +29,9 @@
         >
         <input
           id="password"
+          v-model="password"
           type="password"
           name="password"
-          placeholder="********"
-          autocomplete="new-password"
-          class="block w-full p-3 mt-2 text-black bg-white appearance-none focus:outline-none focus:shadow-inner"
-          required
-        />
-        <label
-          for="password-confirm"
-          class="block mt-2 text-xs font-semibold text-gray-600 uppercase"
-          >Confirm password</label
-        >
-        <input
-          id="password-confirm"
-          type="password"
-          name="password-confirm"
           placeholder="********"
           autocomplete="new-password"
           class="block w-full p-3 mt-2 text-black bg-white appearance-none focus:outline-none focus:shadow-inner"
@@ -60,29 +41,50 @@
           type="submit"
           class="w-full py-3 mt-6 font-medium tracking-widest text-black uppercase bg-white shadow-lg focus:outline-none hover:bg-blue-300 hover:shadow-none"
         >
-          Sign up
+          Log In
         </button>
-        <p
-          class="flex justify-between inline-block mt-4 text-xs text-gray-600 cursor-pointer hover:text-black"
-        >
-          Already registered?
-        </p>
       </form>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-
+import axios from 'axios';
 export default {
   data: function() {
     return {
-      username: "",
+      errors: [],
+      email: null,
+      password: null,
     }
   },
   methods: {
-    getFormValues(){
-      console.log(this.username)
+    formValidation(e){
+      this.errors = [];
+      e.preventDefault();
+
+      if(!this.email) {
+        this.errors.push('Email is required');
+      }
+
+      if(!this.password) {
+        this.errors.push('Password is required');
+      }
+
+      if (!this.errors.length) {
+        const data = { email: this.email, pwd: this.password };
+        axios
+        .post('api/auth/login', data)
+        .then(result => {
+          console.log(result);
+        })
+        .catch(err => {
+          if(err.response.data.keyPattern.pseudo) 
+            this.errors.push("Username already taken");
+          else if(err.response.data.keyPattern.email) 
+            this.errors.push("Email already taken");
+        });
+      }
     }
   }
 }
