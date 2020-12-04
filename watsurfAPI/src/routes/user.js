@@ -1,56 +1,60 @@
-var express = require('express');
-var router = express.Router();
-var user = require('../models/user');
+const express = require('express');
+const router = express.Router();
+const user = require('../models/user');
+const auth = require('../services/authorization');
 
 router.get('/users', (req, res, next) => {
-    user.find(undefined, (err, users) => {
-        if (err) {
-            res.status(400).send(err);
-        }
-
-        res.json(users)
-    });
+    auth(req.headers.authorization)
+        .then(() => {
+            user.find()
+            .then(users => res.json(users))
+            .catch(err  => res.status(400).send(err));
+        })
+        .catch(err => res.status(401).json(err));
 });
 
 router.get('/users/:pseudo([a-z]+)', (req, res) => {
-    user.find(req.params, (err, users) => {
-        if (err) {
-            res.status(400).send(err);
-        }
-
-        if(users.length == 1){
-            res.json(users[0]);
-        } else {
-            res.json(users);
-        }
-    });
+    auth(req.headers.authorization)
+        .then(() => {
+            user.find(req.params)
+            .then(usr => res.json(usr))
+            .catch(err => res.status(400).json(err));
+        })
+        .catch(err => res.status(401).json(err));
+    
 });
 
 router.post('/users', (req, res) => {
-    user.create(req.body, (err, user) => {
-        if(err){
-            res.status(400).send(err);
-        }
-        res.json(user);
-    })?.catch(err => res.status(400).json(err));
+    auth(req.headers.authorization)
+        .then(() => {
+            user.create(req.body)
+            .then(usr => res.json(usr))
+            .catch(err => res.status(400).json(err));
+        })
+        .catch(err => res.status(401).json(err));
+    
 });
 
 router.put('/users/:pseudo([a-z]+)', (req, res) => {
-    user.update(req.body, req.params.pseudo, (err, user) => {
-        if(err){
-            res.status(400).send(err);
-        }
-        res.json(user);
-    })?.catch(err => res.status(400).json(err));
-}); 
+    auth(req.headers.authorization)
+        .then(() => {
+            user.update(req.body, req.params.pseudo)
+            .then(usr => res.json(usr))
+            .catch(err => res.status(400).json(err));
+        })
+        .catch(err => res.status(401).json(err));
+   
+});
 
 router.delete('/users/:pseudo([a-z]+)', (req, res) => {
-    user.remove(req.params.pseudo, (err, user) => {
-        if(err){
-            res.status(400).send(err);
-        }
-        res.json(user);
-    });
+    auth(req.headers.authorization)
+        .then(() => {
+            user.remove(req.params.pseudo)
+            .then(usr => res.json(usr))
+            .catch(err => res.status(400).json(err));
+        })
+        .catch(err => res.status(401).json(err));
+    
 }); 
 
 

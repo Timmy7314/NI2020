@@ -17,46 +17,46 @@ const activitySchema = Joi.object().keys({
     spot: Joi.string().required()
 });
 
-function find(predicat, callback) {
+function find(predicat) {
     const db = mongoCli.getDb();
-    db.collection('activity').find(predicat).toArray(callback);
+    return db.collection('activity').find(predicat).toArray();
 }
 
-function create(activity, callback) {
+function create(activity) {
     const db = mongoCli.getDb();
     const check = activitySchema.validate(activity);
     if(check.error || check.errors){
         return Promise.reject(check.error.details);
     } else {
-        spot.find({name: activity.spot}, (err, s) => {
-            if(err || s.length < 1){
+        spot.find({name: activity.spot}).then(res => {
+            if(res.length < 1){
                 return Promise.reject({error: "Spot " + activity.spot + " not found"})
             }
 
-            db.collection('activity').insertOne(activity, callback);
+            return db.collection('activity').insertOne(activity);
         });
     }
 }
 
-function update(usr, query, callback) {
+function update(usr, query) {
     const db = mongoCli.getDb();
     const check = activitySchema.validate(usr);
     if(check.error || check.errors){
         return Promise.reject(check.error.details);
     } else {
-        spot.find({name: activity.spot}, (err, s) => {
-            if(err || s.length < 1){
+        spot.find({name: activity.spot}).then(res => {
+            if(res.length < 1){
                 return Promise.reject({error: "Spot " + activity.spot + " not found"})
             }
 
-            db.collection('activity').updateOne(query, {$set: usr}, callback);
+            return db.collection('activity').updateOne(query, {$set: usr});
         });
     }
 }
 
-function remove(query, callback){
+function remove(query){
     const db = mongoCli.getDb();
-    return db.collection('activity').deleteOne(query, callback);
+    return db.collection('activity').deleteOne(query);
 }
 
 module.exports = {

@@ -30,6 +30,7 @@
     "cors": "^2.8.5",
     "crypto-js": "^4.0.0",
     "express": "^4.17.1",
+    "helmet": "^4.2.0",
     "joi": "^17.3.0",
     "mongodb": "^3.6.3",
     "swagger-jsdoc": "^6.0.0-rc.3",

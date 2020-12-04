@@ -10,34 +10,34 @@ const spotSchema = Joi.object().keys({
     }).required()
 });
 
-function find(predicat, callback) {
+function find(predicat) {
     const db = mongoCli.getDb();
-    db.collection('spot').find(predicat).toArray(callback);
+    return db.collection('spot').find(predicat).toArray();
 }
 
-function create(spot, callback) {
+function create(spot) {
     const db = mongoCli.getDb();
     const check = spotSchema.validate(spot);
     if(check.error || check.errors){
         return Promise.reject(check.error.details);
     } else {
-        return db.collection('spot').insertOne(spot, callback);
+        return db.collection('spot').insertOne(spot);
     }
 }
 
-function update(spot, name, callback) {
+function update(spot, name) {
     const db = mongoCli.getDb();
     const check = spotSchema.validate(usr);
     if(check.error || check.errors){
         return Promise.reject(check.error.details);
     } else {
-        return db.collection('spot').updateOne({name: name}, {$set: spot}, callback);
+        return db.collection('spot').updateOne({name: name}, {$set: spot});
     }
 }
 
-function remove(name, callback){
+function remove(name){
     const db = mongoCli.getDb();
-    return db.collection('spot').deleteOne({name: name}, callback);
+    return db.collection('spot').deleteOne({name: name});
 }
 
 
