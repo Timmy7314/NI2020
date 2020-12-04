@@ -2,7 +2,7 @@
 
 describe('Homepage', () => {
   it('Shows correct text', () => {
-    cy.visit('/')
+    cy.visit('/register')
 
     cy.contains('h1', 'Hello there 👋, please fill in your information to continue')
   })
