@@ -8,6 +8,10 @@
   * Tests Cypress
 * Project managment
   * CI/CD
+  
+## Links
+* 51.210.37.134: App
+* 51.210.37.134/api: API
 
 ## Project installation
 To install the project :
