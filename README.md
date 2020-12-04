@@ -1,5 +1,14 @@
 # Nuit de l'info 2020
 
+## Features
+
+* Application
+  * Register
+  * Sign in
+  * Tests Cypress
+* Project managment
+  * CI/CD
+
 ## Project installation
 To install the project :
 
