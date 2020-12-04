@@ -119,7 +119,8 @@ export default {
           console.log(result);
         })
         .catch(err => {
-        this.errors.push(err);
+        this.errors.push(err.headers)
+        this.errors.push(err.message);
         });
       }
     }
