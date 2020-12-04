@@ -1,15 +1,12 @@
 <template>
-  <section>
-    <h1 data-testid="title">👋 Hello {{ name }}!</h1>
-    <p>This is your first component tested using browser-based component testing with Cypress + Vue ✌️🌲</p>
+  <section class="min-h-screen">
+    <h1 data-testid="title">👋 Hello !</h1>
+    <p>Welcome to Watsurf! An app made to help you save the ocean.</p>
   </section>
 </template>
 
 <script>
   export default {
-    props: {
-      name: { type: String, default: 'world' }
-    }
   }
 </script>
 
