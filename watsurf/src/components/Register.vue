@@ -95,6 +95,7 @@ export default {
   },
   methods: {
     formValidation(e){
+      this.errors = [];
       e.preventDefault();
       if(!this.username) {
         this.errors.push('Username is required');
