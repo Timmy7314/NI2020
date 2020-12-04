@@ -66,6 +66,7 @@
           required
         />
         <button
+          id="submitBtn"
           type="submit"
           class="w-full py-3 mt-6 font-medium tracking-widest text-black uppercase bg-white shadow-lg focus:outline-none hover:bg-blue-300 hover:shadow-none"
         >
