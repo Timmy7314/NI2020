@@ -5,7 +5,7 @@ var user = require('../models/user');
 router.get('/users', (req, res, next) => {
     user.find(undefined, (err, users) => {
         if (err) {
-            res.send(err);
+            res.status(400).send(err);
         }
 
         res.json(users)
@@ -15,7 +15,7 @@ router.get('/users', (req, res, next) => {
 router.get('/users/:pseudo([a-z]+)', (req, res) => {
     user.find(req.params, (err, users) => {
         if (err) {
-            res.send(err);
+            res.status(400).send(err);
         }
 
         if(users.length == 1){
@@ -29,25 +29,25 @@ router.get('/users/:pseudo([a-z]+)', (req, res) => {
 router.post('/users', (req, res) => {
     user.create(req.body, (err, user) => {
         if(err){
-            res.send(err);
+            res.status(400).send(err);
         }
         res.json(user);
-    })?.catch(err => res.json(err));
+    })?.catch(err => res.status(400).json(err));
 });
 
 router.put('/users/:pseudo([a-z]+)', (req, res) => {
     user.update(req.body, req.params.pseudo, (err, user) => {
         if(err){
-            res.send(err);
+            res.status(400).send(err);
         }
         res.json(user);
-    })?.catch(err => res.json(err));
+    })?.catch(err => res.status(400).json(err));
 }); 
 
 router.delete('/users/:pseudo([a-z]+)', (req, res) => {
     user.remove(req.params.pseudo, (err, user) => {
         if(err){
-            res.send(err);
+            res.status(400).send(err);
         }
         res.json(user);
     });
