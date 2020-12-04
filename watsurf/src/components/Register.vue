@@ -119,7 +119,7 @@ export default {
           console.log(result);
         })
         .catch(err => {
-        this.errors.push(err.headers)
+        console.log(err.response)
         this.errors.push(err.message);
         });
       }
