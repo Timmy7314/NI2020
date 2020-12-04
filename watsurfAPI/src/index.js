@@ -1,8 +1,9 @@
 const express      = require('express')
 const cors         = require('cors');
 const bodyParser   = require('body-parser');
-const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi    = require('swagger-ui-express');
+const helmet       = require('helmet');
 const app          = express();
 
 const port       = process.env.PORT || 3000;
@@ -21,6 +22,7 @@ const swaggerOpt = {
   apis: ["./routes/*.js"]
 }
 
+app.use(helmet());
 
 
 const mongoCli = require('./db/connection');
@@ -34,8 +36,9 @@ mongoCli.connect((err, cli) => {
 const activityRouter = require('./routes/activity');
 const spotRouter     = require('./routes/spot');
 const userRouter     = require('./routes/user');
-const swaggerJSDoc = require('swagger-jsdoc');
+const authRouter     = require('./routes/authentification');
 
+app.disable('x-powered-by')
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -43,6 +46,7 @@ const swaggerDocs = swaggerJSDoc(swaggerOpt);
 app.use('/', activityRouter);
 app.use('/', spotRouter);
 app.use('/', userRouter);
+app.use('/', authRouter);
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.listen(port, () => {

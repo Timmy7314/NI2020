@@ -9,12 +9,12 @@ const userSchema = Joi.object().keys({
     score: Joi.number().positive().min(0).default(0)
 });
 
-function find(predicat, callback) {
+function find(predicat) {
     const db = mongoCli.getDb();
-    db.collection('user').find(predicat).toArray(callback);
+    return db.collection('user').find(predicat).toArray();
 }
 
-function create(usr, callback) {
+function create(usr) {
     const db = mongoCli.getDb();
     const check = userSchema.validate(usr);
     if(check.error || check.errors){
@@ -22,11 +22,11 @@ function create(usr, callback) {
     } else {
         usr.pwd = crypto.SHA256(usr.pwd).toString();
         usr.score = usr.score || 0;
-        return db.collection('user').insertOne(usr, callback);
+        return db.collection('user').insertOne(usr);
     }
 }
 
-function update(usr, pseudo, callback) {
+function update(usr, pseudo) {
     const db = mongoCli.getDb();
     const check = userSchema.validate(usr);
     if(check.error || check.errors){
@@ -34,13 +34,13 @@ function update(usr, pseudo, callback) {
     } else {
         usr.pwd = crypto.SHA256(usr.pwd).toString();
         usr.score = usr.score || 0;
-        return db.collection('user').updateOne({pseudo: pseudo}, {$set: usr}, callback);
+        return db.collection('user').updateOne({pseudo: pseudo}, {$set: usr});
     }
 }
 
-function remove(pseudo, callback){
+function remove(pseudo){
     const db = mongoCli.getDb();
-    return db.collection('user').deleteOne({pseudo: pseudo}, callback);
+    return db.collection('user').deleteOne({pseudo: pseudo});
 }
 
 module.exports = {

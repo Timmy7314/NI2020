@@ -1,15 +1,11 @@
-var express = require('express');
-var router = express.Router();
-var activity = require('../models/activity');
+const express = require('express');
+const router = express.Router();
+const activity = require('../models/activity');
 
 router.get('/activities', (req, res, next) => {
-    activity.find(undefined, (err, activities) => {
-        if (err) {
-            res.status(400).send(err);
-        }
-
-        res.json(activities)
-    });
+    activity.find()
+        .then(activities => res.json(activities))
+        .catch(err => res.status(400).send(err));
 });
 
 router.get('/activities/:spot([a-z]+)', (req, res) => {
@@ -23,26 +19,15 @@ router.get('/activities/:spot([a-z]+)', (req, res) => {
         query.end = req.query.end
     }
 
-    activity.find(query, (err, activities) => {
-        if (err) {
-            res.status(400).send(err);
-        }
-
-        if(activities.length == 1){
-            res.json(activities[0]);
-        } else {
-            res.json(activities);
-        }
-    });
+    activity.find(query)
+        .then(activities => res.json(activities))
+        .catch(err => res.status(400).send(err));
 });
 
 router.post('/activities', (req, res) => {
-    activity.create(req.body, (err, activity) => {
-        if(err){
-            res.status(400).send(err);
-        }
-        res.json(activity);
-    })?.catch(err => res.status(400).json(err));
+    activity.create(req.body)
+        .then(activity => res.json(activity))
+        .catch(err => res.status(400).send(err));
 });
 
 router.put('/activities/:spot([a-z]+)', (req, res) => {
@@ -56,12 +41,9 @@ router.put('/activities/:spot([a-z]+)', (req, res) => {
         end: req.query.end
     };
 
-    activity.update(req.body, query, (err, activity) => {
-        if(err){
-            res.status(400).send(err);
-        }
-        res.json(activity);
-    })?.catch(err => res.status(400).json(err));
+    activity.update(req.body, query)
+        .then(activity => res.json(activity))
+        .catch(err => res.status(400).send(err));
 }); 
 
 router.delete('/activities/:spot([a-z]+)', (req, res) => {
@@ -74,12 +56,9 @@ router.delete('/activities/:spot([a-z]+)', (req, res) => {
         start: req.query.start,
         end: req.query.end
     };
-    activity.remove(query, (err, activity) => {
-        if(err){
-            res.status(400).send(err);
-        }
-        res.json(activity);
-    });
+    activity.remove(query)
+        .then(activity => res.json(activity))
+        .catch(err => res.status(400).send(err))
 });
 
 module.exports = router;
