@@ -50,6 +50,7 @@
 
 <script lang="ts">
 import axios from 'axios';
+import router from '../router'
 export default {
   data: function() {
     return {
@@ -77,6 +78,7 @@ export default {
         .post('api/auth/login', data)
         .then(result => {
           console.log(result);
+          router.push({ name: 'home' });
         })
         .catch(err => {
           if(err.response.data.keyPattern.pseudo) 
