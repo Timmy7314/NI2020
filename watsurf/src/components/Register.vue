@@ -4,7 +4,7 @@
       <h1 class="text-xl font-semibold">
         Hello there 👋, <span class="font-normal">please fill in your information to continue</span>
       </h1>
-      <form class="mt-6" v-on:submit.prevent="getFormValues()">
+      <form class="mt-6" @submit="formValidation">
         <p v-if="errors.length">
           <b>Please correct the following error(s):</b>
           <ul>
@@ -95,6 +95,7 @@ export default {
   },
   methods: {
     formValidation(e){
+      e.preventDefault();
       if(!this.username) {
         this.errors.push('Username is required');
       }
@@ -120,7 +121,6 @@ export default {
         this.errors.push(err);
         });
       }
-      e.preventDefault();
     }
   }
 }
