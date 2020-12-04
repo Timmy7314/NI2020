@@ -4,7 +4,7 @@
       <h1 class="text-xl font-semibold">
         Hello there 👋, <span class="font-normal">please fill in your information to continue</span>
       </h1>
-      <form class="mt-6">
+      <form class="mt-6" v-on:submit.prevent="getFormValues()">
         <label for="username" class="block text-xs font-semibold text-gray-600 uppercase"
           >Username</label
         >
@@ -59,7 +59,6 @@
         <button
           type="submit"
           class="w-full py-3 mt-6 font-medium tracking-widest text-black uppercase bg-white shadow-lg focus:outline-none hover:bg-blue-300 hover:shadow-none"
-          @click="getFormValues()"
         >
           Sign up
         </button>
