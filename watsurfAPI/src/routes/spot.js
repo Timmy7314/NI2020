@@ -4,7 +4,7 @@ const spot = require('../models/spot');
 const auth = require('../services/authorization');
 
 router.get('/spots', (req, res, next) => {
-    auth(req.headers.authorization)
+    auth(req.headers)
         .then(() => {
             spot.find()
                 .then(spots => res.json(spots))
@@ -15,7 +15,7 @@ router.get('/spots', (req, res, next) => {
 });
 
 router.get('/spots/:name([a-z]+)', (req, res) => {
-    auth(req.headers.authorization)
+    auth(req.headers)
         .then(() => {
             spot.find(req.params)
                 .then(spot => res.json(spot))
@@ -26,7 +26,7 @@ router.get('/spots/:name([a-z]+)', (req, res) => {
 });
 
 router.post('/spots', (req, res) => {
-    auth(req.headers.authorization)
+    auth(req.headers)
         .then(() => {
             spot.create(req.body)
                 .then(spot => res.json(spot))
@@ -37,7 +37,7 @@ router.post('/spots', (req, res) => {
 });
 
 router.put('/spots/:name([a-z]+)', (req, res) => {
-    auth(req.headers.authorization)
+    auth(req.headers)
         .then(() => {
             spot.update(req.body, req.params.name)
                 .then(spot => res.json(spot))
@@ -48,7 +48,7 @@ router.put('/spots/:name([a-z]+)', (req, res) => {
 });
 
 router.delete('/spots/:name([a-z]+)', (req, res) => {
-    auth(req.headers.authorization)
+    auth(req.headers)
         .then(() => {
             spot.remove(req.params.name)
                 .then(spot => res.json(spot))
