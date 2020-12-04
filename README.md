@@ -47,5 +47,5 @@ $ yarn dev --port 8080
 Run the tests with Cypress
 
 ```bash
-$ yarn test:cy
+$ yarn test:ci
 ```
