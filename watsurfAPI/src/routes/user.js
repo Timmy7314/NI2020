@@ -25,13 +25,9 @@ router.get('/users/:pseudo([a-z]+)', (req, res) => {
 });
 
 router.post('/users', (req, res) => {
-    auth(req.headers.authorization)
-        .then(() => {
-            user.create(req.body)
-                .then(usr => res.json(usr))
-                .catch(err => res.status(400).json(err));
-        })
-        .catch(err => res.status(401).json(err));
+    user.create(req.body)
+        .then(usr => res.json(usr))
+        .catch(err => res.status(400).json(err));
 
 });
 
