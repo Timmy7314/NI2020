@@ -1,17 +1,29 @@
-const express = require('express')
-const cors = require('cors');
+const express    = require('express')
+const cors       = require('cors');
 const bodyParser = require('body-parser');
-const app = express()
-const port = 3000
+const app        = express();
+const port       = 3000;
+
+const mongoCli = require('./db/connection');
+mongoCli.connect((err, cli) => {
+  if(err) {
+    throw err;
+  }
+  console.log("Connection to mongo ... OK");
+})
+
+const indexRouter    = require('./routes/index');
+const activityRouter = require('./routes/activity');
+const spotRouter     = require('./routes/spot');
+const userRouter     = require('./routes/user');
 
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-  res.json({
-      message: 'Hello World!'
-  })
-})
+app.use('/', indexRouter);
+app.use('/', activityRouter);
+app.use('/', spotRouter);
+app.use('/', userRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
