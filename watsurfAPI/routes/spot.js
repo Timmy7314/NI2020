@@ -32,7 +32,7 @@ router.post('/spots', (req, res) => {
             res.send(err);
         }
         res.json(spot);
-    });
+    })?.catch(err => res.json(err));
 });
 
 router.put('/spots/:name([a-z]+)', (req, res) => {
@@ -42,7 +42,7 @@ router.put('/spots/:name([a-z]+)', (req, res) => {
         }
         res.json(spot);
     });
-}); 
+})?.catch(err => res.json(err)); 
 
 router.delete('/spots/:name([a-z]+)', (req, res) => {
     spot.remove(req.params.name, (err, spot) => {

@@ -32,7 +32,7 @@ router.post('/users', (req, res) => {
             res.send(err);
         }
         res.json(user);
-    });
+    })?.catch(err => res.json(err));
 });
 
 router.put('/users/:pseudo([a-z]+)', (req, res) => {
@@ -41,7 +41,7 @@ router.put('/users/:pseudo([a-z]+)', (req, res) => {
             res.send(err);
         }
         res.json(user);
-    });
+    })?.catch(err => res.json(err));
 }); 
 
 router.delete('/users/:pseudo([a-z]+)', (req, res) => {
