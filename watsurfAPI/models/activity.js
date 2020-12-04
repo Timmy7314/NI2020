@@ -1,6 +1,5 @@
 const Joi = require('joi');
 const mongoCli = require('../db/connection');
-const crypto = require('crypto-js');
 const spot = require('./spot');
 
 const activitySchema = Joi.object().keys({
