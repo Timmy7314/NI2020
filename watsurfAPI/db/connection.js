@@ -5,8 +5,8 @@ var _db;
 
 module.exports = {
     connect: (callback) => {
-        MongoClient.connect(url, {useNewUrlParser: true}, (err, cli) => {
-            _db = cli.db('watsurfer');
+        MongoClient.connect(url, (err, cli) => {
+            _db = cli.db('watsurf');
             return callback(err);
         });
     },
