@@ -119,8 +119,10 @@ export default {
           console.log(result);
         })
         .catch(err => {
-        console.log(err.response)
-        this.errors.push(err.message);
+          if(err.response.data.keyPattern.pseudo) 
+            this.errors.push("Username already taken");
+          else if(err.response.data.keyPattern.email) 
+            this.errors.push("Email already taken");
         });
       }
     }
