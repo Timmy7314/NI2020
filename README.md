@@ -1,7 +1,9 @@
 # Nuit de l'info 2020
 
+## Project installation
 To install the project :
 
+### Code installation
 ```
 $ git clone git@github.com:Timmy7314/NI2020.git
 $ cd NI2020
@@ -10,6 +12,16 @@ $ yarn
 $ cd ../watsurfAPI
 $ yarn
 ```
+
+### Install database
+
+```
+$ sudo docker pull timmy73/nuit-info-2020:1.0.0
+$ sudo mkdir -p /mongodata
+$ sudo docker run -it -v mongodata:/data/db -p 27017:27017 --name mongodb -d timmy73/nuit-info-2020:1.0.0
+```
+
+### Run the project
 
 Run the api :
 
