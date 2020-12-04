@@ -5,6 +5,12 @@
         Hello there 👋, <span class="font-normal">please fill in your information to continue</span>
       </h1>
       <form class="mt-6" v-on:submit.prevent="getFormValues()">
+        <p v-if="errors.length">
+          <b>Please correct the following error(s):</b>
+          <ul>
+            <li v-for="(error, index) in errors" v-bind:key="index">{{ error }}</li>
+          </ul>
+      </p>
         <label for="username" class="block text-xs font-semibold text-gray-600 uppercase"
           >Username</label
         >
@@ -23,6 +29,7 @@
         >
         <input
           id="email"
+          v-model="email"
           type="email"
           name="email"
           placeholder="john.doe@company.com"
@@ -35,6 +42,7 @@
         >
         <input
           id="password"
+          v-model="password"
           type="password"
           name="password"
           placeholder="********"
@@ -49,6 +57,7 @@
         >
         <input
           id="password-confirm"
+          v-model="passwordconf"
           type="password"
           name="password-confirm"
           placeholder="********"
@@ -73,16 +82,45 @@
 </template>
 
 <script lang="ts">
-
+import axios from 'axios';
 export default {
   data: function() {
     return {
-      username: "",
+      errors: [],
+      username: null,
+      email: null,
+      password: null,
+      passwordconf: null
     }
   },
   methods: {
-    getFormValues(){
-      console.log(this.username)
+    formValidation(e){
+      if(!this.username) {
+        this.errors.push('Username is required');
+      }
+
+      if(!this.email) {
+        this.errors.push('Email is required');
+      }
+
+      if(!this.password || !this.passwordconf) {
+        this.errors.push('Password is required');
+      } else if(this.password != this.passwordconf) {
+        this.errors.push('Passwords are not identical');
+      }
+
+      if (!this.errors.length) {
+        const data = { pseudo: this.username, email: this.email, pwd: this.password };
+        axios
+        .post('api/users', data)
+        .then(result => {
+          console.log(result);
+        })
+        .catch(err => {
+        this.errors.push(err);
+        });
+      }
+      e.preventDefault();
     }
   }
 }
