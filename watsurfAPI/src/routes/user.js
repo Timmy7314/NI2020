@@ -4,7 +4,7 @@ const user = require('../models/user');
 const auth = require('../services/authorization');
 
 router.get('/users', (req, res, next) => {
-    auth(req.headers.authorization)
+    auth(req.headers)
         .then(() => {
             user.find()
                 .then(users => res.json(users))
@@ -14,7 +14,7 @@ router.get('/users', (req, res, next) => {
 });
 
 router.get('/users/:pseudo([a-z]+)', (req, res) => {
-    auth(req.headers.authorization)
+    auth(req.headers)
         .then(() => {
             user.find(req.params)
                 .then(usr => res.json(usr))
@@ -32,7 +32,7 @@ router.post('/users', (req, res) => {
 });
 
 router.put('/users/:pseudo([a-z]+)', (req, res) => {
-    auth(req.headers.authorization)
+    auth(req.headers)
         .then(() => {
             user.update(req.body, req.params.pseudo)
                 .then(usr => res.json(usr))
@@ -43,7 +43,7 @@ router.put('/users/:pseudo([a-z]+)', (req, res) => {
 });
 
 router.delete('/users/:pseudo([a-z]+)', (req, res) => {
-    auth(req.headers.authorization)
+    auth(req.headers)
         .then(() => {
             user.remove(req.params.pseudo)
                 .then(usr => res.json(usr))

@@ -1,7 +1,12 @@
 const user = require('../models/user');
 const jwt = require('jsonwebtoken');
 
-function checktoken(token) {
+function checktoken(headers) {
+    if(!headers.authorization){
+        return Promise.reject({error: "You must be authenticated to access this resource."})
+    }
+
+    const token = headers.authorization;
     const data = jwt.decode(token.substring("Bearer ".length));
     const timespamp = Math.floor(Date.now() / 1000);
     if(timespamp > data.exp){

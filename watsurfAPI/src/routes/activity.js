@@ -4,7 +4,7 @@ const activity = require('../models/activity');
 const auth = require('../services/authorization');
 
 router.get('/activities', (req, res, next) => {
-    auth(req.headers.authorization)
+    auth(req.headers)
         .then(() => {
             activity.find()
                 .then(activities => res.json(activities))
@@ -15,7 +15,7 @@ router.get('/activities', (req, res, next) => {
 });
 
 router.get('/activities/:spot([a-z]+)', (req, res) => {
-    auth(req.headers.authorization)
+    auth(req.headers)
         .then(() => {
             var query = { spot: req.params.spot };
 
@@ -36,7 +36,7 @@ router.get('/activities/:spot([a-z]+)', (req, res) => {
 });
 
 router.post('/activities', (req, res) => {
-    auth(req.headers.authorization)
+    auth(req.headers)
         .then(() => {
             activity.create(req.body)
                 .then(activity => res.json(activity))
@@ -47,7 +47,7 @@ router.post('/activities', (req, res) => {
 });
 
 router.put('/activities/:spot([a-z]+)', (req, res) => {
-    auth(req.headers.authorization)
+    auth(req.headers)
         .then(() => {
             if (!req.query.start || req.query.end) {
                 res.status(400).json({ error: "The query params start ant end are required." })
@@ -68,7 +68,7 @@ router.put('/activities/:spot([a-z]+)', (req, res) => {
 });
 
 router.delete('/activities/:spot([a-z]+)', (req, res) => {
-    auth(req.headers.authorization)
+    auth(req.headers)
         .then(() => {
             if (!req.query.start || req.query.end) {
                 res.status(400).json({ error: "The query params start ant end are required." })
